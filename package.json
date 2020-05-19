@@ -4,5 +4,8 @@
   "author": "undecidabot",
   "license": "Zlib",
   "repository": "github:undecidabot/stardew-combos",
-  "private": true
+  "private": true,
+  "scripts": {
+    "download-assets": "node download-assets.js"
+  }
 }
