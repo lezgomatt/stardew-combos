@@ -67,7 +67,7 @@ function setup(container) {
     loadingImages = loadingImages.concat(flooringPromises);
 
     Promise.all(loadingImages).then(() => {
-        drawShed();
+        drawShed(selectedWallpaper, selectedFlooring);
         document.body.classList.remove("is-loading");
     });
 }
@@ -82,7 +82,9 @@ function setupWallpaperChoices(container) {
 
         let choice = document.createElement("div");
         choice.classList.add("wallpaper-choice");
-        choice.addEventListener("click", (e) => { selectedWallpaper = id; drawShed(); });
+        choice.addEventListener("click", (e) => { selectedWallpaper = id; drawShed(selectedWallpaper, selectedFlooring); });
+        choice.addEventListener("mouseenter", (e) => { drawShed(id, selectedFlooring); });
+        choice.addEventListener("mouseleave", (e) => { drawShed(selectedWallpaper, selectedFlooring); });
         container.appendChild(choice);
     
         let icon = document.createElement("img");
@@ -113,7 +115,9 @@ function setupFlooringChoices(container) {
 
         let choice = document.createElement("div");
         choice.classList.add("flooring-choice");
-        choice.addEventListener("click", (e) => { selectedFlooring = id; drawShed(); });
+        choice.addEventListener("click", (e) => { selectedFlooring = id; drawShed(selectedWallpaper, selectedFlooring); });
+        choice.addEventListener("mouseenter", (e) => { drawShed(selectedWallpaper, id); });
+        choice.addEventListener("mouseleave", (e) => { drawShed(selectedWallpaper, selectedFlooring); });
         container.appendChild(choice);
     
         let icon = document.createElement("img");
@@ -134,22 +138,22 @@ function setupFlooringChoices(container) {
     return loadingImages;
 }
 
-function drawShed() {
+function drawShed(wallpaperId, flooringId) {
     let context = canvas.getContext("2d");
 
     context.drawImage(images["background/shed"], 0, 0, shedWidth, shedHeight);
 
     // Draw flooring first since the wallpaper casts a shadow
     context.save();
-    drawFlooring(context);
+    drawFlooring(context, flooringId);
     context.restore();
 
     context.save();
-    drawWallpaper(context);
+    drawWallpaper(context, wallpaperId);
     context.restore();
 }
 
-function drawWallpaper(context) {
+function drawWallpaper(context, id) {
     context.beginPath();
     context.moveTo(19, 20);
     context.lineTo(19, 116);
@@ -157,7 +161,7 @@ function drawWallpaper(context) {
     context.lineTo(371, 20);
     context.clip();
 
-    let tile = images["wallpaper/" + selectedWallpaper];
+    let tile = images["wallpaper/" + id];
     let tileWidth = 96;
     let xOffset = 19;
     let yOffset = 20;
@@ -167,7 +171,7 @@ function drawWallpaper(context) {
     }
 }
 
-function drawFlooring(context) {
+function drawFlooring(context, id) {
     context.beginPath();
     context.moveTo(19, 110);
     context.lineTo(19, 376);
@@ -183,7 +187,7 @@ function drawFlooring(context) {
     context.lineTo(371, 110);
     context.clip();
 
-    let tile = images["flooring/" + selectedFlooring];
+    let tile = images["flooring/" + id];
     let tileWidth = 128;
     let tileHeight = 128;
     let xOffset = 19;
