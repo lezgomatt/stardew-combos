@@ -6,6 +6,6 @@
   "repository": "github:undecidabot/stardew-combos",
   "private": true,
   "scripts": {
-    "download-assets": "node download-assets.js"
+    "fetch": "node scripts/fetch.js"
   }
 }

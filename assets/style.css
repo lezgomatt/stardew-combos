@@ -1,0 +1,58 @@
+body {
+    font-family: sans-serif;
+}
+
+.app-title {
+    text-align: center;
+}
+
+.loading-text {
+    display: none;
+    text-align: center;
+}
+
+.is-loading .loading-text {
+    display: block;
+}
+
+.is-loading .shed-region,
+.is-loading .wallpaper-region,
+.is-loading .flooring-region {
+    display: none;
+}
+
+.shed-region {
+    text-align: center;
+}
+
+.shed-region canvas {
+    padding: 10px;
+    border-radius: 15px;
+    background-color: black;
+}
+
+.wallpaper-region {
+    clear: both;
+}
+
+.wallpaper-choice {
+    float: left;
+}
+
+.wallpaper-icon {
+    width: 36px;
+    margin-right: 2px;
+}
+
+.flooring-region {
+    clear: both;
+}
+
+.flooring-choice {
+    float: left;
+}
+
+.flooring-icon {
+    width: 42px;
+    margin-right: 2px;
+}

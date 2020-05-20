@@ -3,7 +3,7 @@
 const fs = require("fs");
 const https = require("https");
 
-const assetsDir = "stardew-assets/"
+const assetsDir = "assets/stardew/"
 
 function get(url) {
     return new Promise((resolve, reject) => {
