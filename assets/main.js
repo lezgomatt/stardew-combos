@@ -27,19 +27,23 @@ function setup(container) {
     previewRegion.classList.add("preview-region");
     container.appendChild(previewRegion);
 
+    let previewArea = document.createElement("div");
+    previewArea.classList.add("preview-area");
+    container.appendChild(previewArea);
+
     let appTitle = document.createElement("h1");
     appTitle.innerText = "Stardew Combos";
-    previewRegion.appendChild(appTitle);
+    previewArea.appendChild(appTitle);
 
     canvas = document.createElement("canvas");
     canvas.width = shedWidth;
     canvas.height = shedHeight;
-    previewRegion.appendChild(canvas);
+    previewArea.appendChild(canvas);
 
     let shedBackground = document.createElement("img");
     shedBackground.src = assetsPath + "Shed_Inside.png";
     shedBackground.style.display = "none";
-    previewRegion.appendChild(shedBackground);
+    previewArea.appendChild(shedBackground);
 
     loadingImages.push(imageLoadPromise(shedBackground));
     images["background/shed"] = shedBackground;
@@ -83,6 +87,7 @@ function setup(container) {
     Promise.all(loadingImages).then(() => {
         drawShed(selectedWallpaper, selectedFlooring);
         document.body.classList.remove("is-loading");
+        centerPreview();
     });
 }
 
@@ -214,8 +219,24 @@ function drawFlooring(context, id) {
     }
 }
 
+function centerPreview() {
+    let elem = document.getElementsByClassName("preview-area")[0];
+
+    if (window.innerWidth < 720) {
+        elem.style.top = "";
+        return;
+    }
+
+    let yOffset = (window.innerHeight - elem.getBoundingClientRect().height) / 3;
+    yOffset = Math.max(yOffset, 32);
+    yOffset = Math.round(yOffset);
+
+    elem.style.top = yOffset + "px";
+}
+
 function main() {
     setup(document.getElementsByClassName("container")[0]);
+    window.addEventListener("resize", centerPreview);
 }
 
 main();

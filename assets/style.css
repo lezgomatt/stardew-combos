@@ -59,7 +59,7 @@ h2 {
     padding: 20px;
 }
 
-@media (min-width: 960px) { 
+@media (min-width: 720px) { 
     .container {
         display: flex;
         align-items: flex-start;    
@@ -67,6 +67,18 @@ h2 {
 }
 
 .preview-region {
+    min-width: 420px;
+    margin: 12px;
+}
+
+@media (min-width: 720px) { 
+    .preview-area {
+        position: fixed;
+        width: 420px;
+    }    
+}
+
+.preview-area {
     margin: 12px;
     padding: 12px;
     border-radius: 16px;
