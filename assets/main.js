@@ -21,50 +21,64 @@ function imageLoadPromise(imageElement) {
 function setup(container) {
     let loadingImages = [];
 
-    // == Shed Region == //
+    // == Preview Region == //
 
-    let shedRegion = document.createElement("div");
-    shedRegion.classList.add("shed-region");
-    container.appendChild(shedRegion);
+    let previewRegion = document.createElement("div");
+    previewRegion.classList.add("preview-region");
+    container.appendChild(previewRegion);
+
+    let appTitle = document.createElement("h1");
+    appTitle.innerText = "Stardew Combos";
+    previewRegion.appendChild(appTitle);
 
     canvas = document.createElement("canvas");
     canvas.width = shedWidth;
     canvas.height = shedHeight;
-    shedRegion.appendChild(canvas);
+    previewRegion.appendChild(canvas);
 
     let shedBackground = document.createElement("img");
     shedBackground.src = assetsPath + "Shed_Inside.png";
     shedBackground.style.display = "none";
-    shedRegion.appendChild(shedBackground);
+    previewRegion.appendChild(shedBackground);
 
     loadingImages.push(imageLoadPromise(shedBackground));
     images["background/shed"] = shedBackground;
 
-    // == Wallpaper Region == //
+    // == Selection Region == //
 
-    let wallpaperRegion = document.createElement("div");
-    wallpaperRegion.classList.add("wallpaper-region");
-    container.appendChild(wallpaperRegion);
+    let selectionRegion = document.createElement("div");
+    selectionRegion.classList.add("selection-region");
+    container.appendChild(selectionRegion);
+
+    // -- Wallpaper Area -- //
+
+    let wallpaperArea = document.createElement("div");
+    selectionRegion.appendChild(wallpaperArea);
 
     let wallpaperTitle = document.createElement("h2");
-    wallpaperTitle.innerText = "Select Wallpaper";
-    wallpaperRegion.appendChild(wallpaperTitle);
+    wallpaperTitle.innerText = "Wallpaper";
+    wallpaperArea.appendChild(wallpaperTitle);
 
-    let wallpaperPromises = setupWallpaperChoices(wallpaperRegion);
+    let wallpaperContents = document.createElement("div");
+    wallpaperArea.appendChild(wallpaperContents);
+    let wallpaperPromises = setupWallpaperChoices(wallpaperContents);
     loadingImages = loadingImages.concat(wallpaperPromises);
 
-    // == Flooring Region == //
+    // -- Flooring Area -- //
 
-    let flooringRegion = document.createElement("div");
-    flooringRegion.classList.add("flooring-region");
-    container.appendChild(flooringRegion);
+    let flooringArea = document.createElement("div");
+    selectionRegion.appendChild(flooringArea);
 
     let flooringTitle = document.createElement("h2");
-    flooringTitle.innerText = "Select Flooring";
-    flooringRegion.appendChild(flooringTitle);
+    flooringTitle.innerText = "Flooring";
+    flooringArea.appendChild(flooringTitle);
 
-    let flooringPromises = setupFlooringChoices(flooringRegion);
+    let flooringContents = document.createElement("div");
+    flooringArea.appendChild(flooringContents);
+    let flooringPromises = setupFlooringChoices(flooringContents);
     loadingImages = loadingImages.concat(flooringPromises);
+
+    // == Load Handler == //
 
     Promise.all(loadingImages).then(() => {
         drawShed(selectedWallpaper, selectedFlooring);
@@ -80,7 +94,7 @@ function setupWallpaperChoices(container) {
         let id = i.toString();
         id = "0".repeat(3 - id.length) + id;
 
-        let choice = document.createElement("div");
+        let choice = document.createElement("span");
         choice.classList.add("wallpaper-choice");
         choice.addEventListener("click", (e) => { selectedWallpaper = id; drawShed(selectedWallpaper, selectedFlooring); });
         choice.addEventListener("mouseenter", (e) => { drawShed(id, selectedFlooring); });
@@ -113,11 +127,11 @@ function setupFlooringChoices(container) {
         let id = i.toString();
         id = "0".repeat(2 - id.length) + id;
 
-        let choice = document.createElement("div");
+        let choice = document.createElement("span");
         choice.classList.add("flooring-choice");
-        choice.addEventListener("click", (e) => { selectedFlooring = id; drawShed(selectedWallpaper, selectedFlooring); });
-        choice.addEventListener("mouseenter", (e) => { drawShed(selectedWallpaper, id); });
-        choice.addEventListener("mouseleave", (e) => { drawShed(selectedWallpaper, selectedFlooring); });
+        choice.addEventListener("click", () => { selectedFlooring = id; drawShed(selectedWallpaper, selectedFlooring); });
+        choice.addEventListener("mouseenter", () => { drawShed(selectedWallpaper, id); });
+        choice.addEventListener("mouseleave", () => { drawShed(selectedWallpaper, selectedFlooring); });
         container.appendChild(choice);
     
         let icon = document.createElement("img");

@@ -1,58 +1,92 @@
+@font-face {
+    font-family: "Press Start 2P";
+    font-weight: normal;
+    font-style: normal;
+    font-display: block;
+    src: url("fonts/PressStart2P-Regular.woff2") format("woff2");
+}
+
+html {
+    box-sizing: border-box;
+}
+
+*, *:before, *:after {
+    box-sizing: inherit;
+}
+
 body {
-    font-family: sans-serif;
+    background: #f7f0dd;
+    font-family: "Press Start 2P", sans-serif;
+    margin: 0;
+    padding: 0;
 }
 
-.app-title {
-    text-align: center;
+h1, h2 {
+    font-weight: normal;
+    text-transform: uppercase;
+    line-height: 1.2;
 }
 
-.loading-text {
-    display: none;
-    text-align: center;
+h1 {
+    margin: 8px 0;
+    font-size: 36px;
 }
 
-.is-loading .loading-text {
+h2 {
+    margin-top: 16px;
+    margin-bottom: 4px;
+    margin-left: 1px;
+    font-size: 24px;
+}
+
+.is-loading .loading-container {
     display: block;
 }
 
-.is-loading .shed-region,
-.is-loading .wallpaper-region,
-.is-loading .flooring-region {
+.is-loading .preview-region,
+.is-loading .selection-region {
     display: none;
 }
 
-.shed-region {
+.loading-container {
+    display: none;
     text-align: center;
 }
 
-.shed-region canvas {
-    padding: 10px;
-    border-radius: 15px;
+.container {
+    max-width: 1440px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+@media (min-width: 960px) { 
+    .container {
+        display: flex;
+        align-items: flex-start;    
+    }
+}
+
+.preview-region {
+    margin: 12px;
+    padding: 12px;
+    border-radius: 16px;
     background-color: black;
+    color: white;
+    text-align: center;
 }
 
-.wallpaper-region {
-    clear: both;
-}
-
-.wallpaper-choice {
-    float: left;
+.selection-region {
+    margin: 12px;
 }
 
 .wallpaper-icon {
     width: 36px;
-    margin-right: 2px;
-}
-
-.flooring-region {
-    clear: both;
-}
-
-.flooring-choice {
-    float: left;
+    margin: 1px;
+    cursor: pointer;
 }
 
 .flooring-icon {
     width: 42px;
-    margin-right: 2px;
+    margin: 1px;
+    cursor: pointer;
 }
