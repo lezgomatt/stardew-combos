@@ -9,7 +9,15 @@ let selectedWallpaper = "001";
 let selectedFlooring = "01";
 
 let images = Object.create(null);
+
+let previewRegion = document.getElementsByClassName("preview-region")[0];
+let previewArea = document.getElementsByClassName("preview-area")[0];
 let canvas = null;
+let selectionRegion = document.getElementsByClassName("selection-region")[0];
+let wallpaperArea = document.getElementsByClassName("wallpaper-area")[0];
+let wallpaperContents = document.getElementsByClassName("wallpaper-contents")[0];
+let flooringArea = document.getElementsByClassName("flooring-area")[0];
+let flooringContents = document.getElementsByClassName("flooring-contents")[0];
 
 function imageLoadPromise(imageElement) {
     return new Promise((resolve, reject) => {
@@ -22,18 +30,6 @@ function setup(container) {
     let loadingImages = [];
 
     // == Preview Region == //
-
-    let previewRegion = document.createElement("div");
-    previewRegion.classList.add("preview-region");
-    container.appendChild(previewRegion);
-
-    let previewArea = document.createElement("div");
-    previewArea.classList.add("preview-area");
-    container.appendChild(previewArea);
-
-    let appTitle = document.createElement("h1");
-    appTitle.innerText = "Stardew Combos";
-    previewArea.appendChild(appTitle);
 
     canvas = document.createElement("canvas");
     canvas.width = shedWidth;
@@ -50,40 +46,15 @@ function setup(container) {
 
     // == Selection Region == //
 
-    let selectionRegion = document.createElement("div");
-    selectionRegion.classList.add("selection-region");
-    container.appendChild(selectionRegion);
-
     // -- Wallpaper Area -- //
-
-    let wallpaperArea = document.createElement("div");
-    selectionRegion.appendChild(wallpaperArea);
-
-    let wallpaperTitle = document.createElement("h2");
-    wallpaperTitle.innerText = "Wallpaper";
-    wallpaperArea.appendChild(wallpaperTitle);
-
-    let wallpaperContents = document.createElement("div");
-    wallpaperArea.appendChild(wallpaperContents);
     let wallpaperPromises = setupWallpaperChoices(wallpaperContents);
     loadingImages = loadingImages.concat(wallpaperPromises);
 
     // -- Flooring Area -- //
-
-    let flooringArea = document.createElement("div");
-    selectionRegion.appendChild(flooringArea);
-
-    let flooringTitle = document.createElement("h2");
-    flooringTitle.innerText = "Flooring";
-    flooringArea.appendChild(flooringTitle);
-
-    let flooringContents = document.createElement("div");
-    flooringArea.appendChild(flooringContents);
     let flooringPromises = setupFlooringChoices(flooringContents);
     loadingImages = loadingImages.concat(flooringPromises);
 
     // == Load Handler == //
-
     Promise.all(loadingImages).then(() => {
         drawShed(selectedWallpaper, selectedFlooring);
         document.body.classList.remove("is-loading");
