@@ -40,6 +40,11 @@ function downloadSet(matches) {
             continue;
         }
 
+        if (fs.existsSync(assetsDir + filename)) {
+            console.log(`Skipped "${filename}" (already exists)`);
+            continue;
+        }
+
         found.add(filename);
         promises.push(
             downloadFile("https://stardewvalleywiki.com" + path, assetsDir + filename)
@@ -103,6 +108,7 @@ async function main() {
         fs.mkdirSync(assetsDir);
     }
 
+    console.log("Fetching Stardew Valley assets from the wiki...");
     await downloadShedBackground();
     await downloadWallpapers();
     await downloadFlooring();
