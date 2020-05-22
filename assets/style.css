@@ -98,6 +98,33 @@ button::-moz-focus-inner {
     font-size: 36px;
 }
 
+#preview-buttons {
+    display: flex;
+    position: relative;
+    margin: -24px -16px 4px;
+    font-family: "Press Start 2P";
+    font-size: 16px;
+    text-transform: uppercase;
+}
+
+#preview-buttons > div {
+    width: 50%;
+}
+
+#preview-buttons button {
+    padding: 2px 4px;
+    border: none;
+    background: none;
+    color: inherit;
+    font: inherit;
+    text-transform: inherit;
+    cursor: pointer;
+}
+
+#preview-buttons button:focus {
+    outline: 2px dashed white;
+}
+
 #selection-region {
     display: flex;
     flex-direction: column;
@@ -106,38 +133,44 @@ button::-moz-focus-inner {
 
 #selection-region h2 {
     color: black;
-    margin-top: 16px;
+    margin-top: 20px;
     margin-bottom: 4px;
     margin-left: 1px;
     font-size: 24px;
 }
 
 .wallpaper-choice,
-.flooring-choice {
-    background: none;
-    border: none;
-    padding: 0;
+.flooring-choice,
+.combos-choice {
     margin: 2px 4px;
+    padding: 0;
+    border: none;
+    background: none;
     line-height: 0;
     cursor: pointer;
 }
 
 .wallpaper-choice:focus,
-.flooring-choice:focus {
+.flooring-choice:focus,
+.combos-choice:focus {
     outline: 4px solid gray;
 }
 
 .wallpaper-choice.selected,
-.flooring-choice.selected {
+.flooring-choice.selected,
+.combos-choice.selected {
     outline: 4px solid #2890db;
 }
 
-.wallpaper-icon {
-    width: 36px;
+.wallpaper-icon { width: 36px; }
+.flooring-icon { width: 42px; }
+
+#combos-contents p {
+    display: none;
 }
 
-.flooring-icon {
-    width: 42px;
+#combos-contents p:only-child {
+    display: block;
 }
 
 footer {
