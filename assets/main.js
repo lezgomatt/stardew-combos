@@ -318,7 +318,7 @@ function centerPreview() {
     }
 
     let yOffset = (window.innerHeight - previewArea.getBoundingClientRect().height) / 3;
-    yOffset = Math.max(yOffset, 32);
+    yOffset = Math.max(yOffset, -16);
     yOffset = Math.round(yOffset);
 
     previewArea.style.top = yOffset + "px";
