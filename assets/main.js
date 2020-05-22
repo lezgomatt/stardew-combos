@@ -22,11 +22,11 @@ let flooringContents = document.getElementsByClassName("flooring-contents")[0];
 function imageLoadPromise(imageElement) {
     return new Promise((resolve, reject) => {
         imageElement.addEventListener("load", () => { resolve(); });
-        imageElement.addEventListener("error", () => { reject() });
+        imageElement.addEventListener("error", () => { reject(); });
     });
 }
 
-function setup(container) {
+function setup() {
     let loadingImages = [];
 
     // == Preview Region == //
@@ -145,10 +145,10 @@ function drawShed(wallpaperId, flooringId) {
 
 function drawWallpaper(context, id) {
     context.beginPath();
-    context.moveTo(19, 20);
-    context.lineTo(19, 116);
-    context.lineTo(371, 116);
-    context.lineTo(371, 20);
+    context.moveTo(19, 20); // top left
+    context.lineTo(19, 116); // bottom left
+    context.lineTo(371, 116); // bottom right
+    context.lineTo(371, 20); // top right
     context.clip();
 
     let tile = images["wallpaper/" + id];
@@ -163,18 +163,18 @@ function drawWallpaper(context, id) {
 
 function drawFlooring(context, id) {
     context.beginPath();
-    context.moveTo(19, 110);
-    context.lineTo(19, 376);
-    context.lineTo(32, 388);
-    context.lineTo(177, 388);
-    context.lineTo(179, 390);
-    context.lineTo(179, 420);
-    context.lineTo(211, 420);
-    context.lineTo(211, 390);
-    context.lineTo(213, 388);
-    context.lineTo(358, 388);
-    context.lineTo(371, 376);
-    context.lineTo(371, 110);
+    context.moveTo(19, 110); // top left
+    context.lineTo(19, 376); // bottom left 1
+    context.lineTo(32, 388); // bottom left 2
+    context.lineTo(177, 388); // middle left 1
+    context.lineTo(179, 390); // middle left 2
+    context.lineTo(179, 420); // middle left 3
+    context.lineTo(211, 420); // middle right 3
+    context.lineTo(211, 390); // middle right 2
+    context.lineTo(213, 388); // middle right 1
+    context.lineTo(358, 388); // bottom left 2
+    context.lineTo(371, 376); // bottom left 1
+    context.lineTo(371, 110); // top right
     context.clip();
 
     let tile = images["flooring/" + id];
@@ -191,22 +191,20 @@ function drawFlooring(context, id) {
 }
 
 function centerPreview() {
-    let elem = document.getElementsByClassName("preview-area")[0];
-
     if (window.innerWidth < 720) {
-        elem.style.top = "";
+        previewArea.style.top = "";
         return;
     }
 
-    let yOffset = (window.innerHeight - elem.getBoundingClientRect().height) / 3;
+    let yOffset = (window.innerHeight - previewArea.getBoundingClientRect().height) / 3;
     yOffset = Math.max(yOffset, 32);
     yOffset = Math.round(yOffset);
 
-    elem.style.top = yOffset + "px";
+    previewArea.style.top = yOffset + "px";
 }
 
 function main() {
-    setup(document.getElementsByClassName("container")[0]);
+    setup();
     window.addEventListener("resize", centerPreview);
 }
 

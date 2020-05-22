@@ -18,10 +18,11 @@ body {
     background: #f7f0dd;
     margin: 0;
     padding: 0;
-    font-family: "Press Start 2P", sans-serif;
+    font-family: sans-serif;
 }
 
 h1, h2 {
+    font-family: "Press Start 2P", sans-serif;
     font-weight: normal;
     text-transform: uppercase;
     line-height: 1.2;
@@ -46,6 +47,7 @@ h1, h2 {
 
 .loading-container {
     display: none;
+    width: 100%;
     text-align: center;
 }
 
@@ -117,7 +119,6 @@ h1, h2 {
 footer {
     margin: 24px 0 8px;
     color: #404040;
-    font-family: sans-serif;
     font-size: 14px;
     font-weight: normal;
     text-align: center;

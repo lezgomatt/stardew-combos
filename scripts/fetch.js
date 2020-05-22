@@ -40,16 +40,17 @@ function downloadSet(matches) {
             continue;
         }
 
-        if (fs.existsSync(assetsDir + filename)) {
-            console.log(`Skipped "${filename}" (already exists)`);
-            continue;
-        }
-
         found.add(filename);
-        promises.push(
-            downloadFile("https://stardewvalleywiki.com" + path, assetsDir + filename)
-            .then(() => { console.log(`Downloaded "${filename}"`); })
-        );
+        let dest = assetsDir + filename;
+
+        if (fs.existsSync(dest) && fs.statSync(dest).size > 0) {
+            console.log(`Skipped "${filename}" (already exists)`);
+        } else {
+            promises.push(
+                downloadFile("https://stardewvalleywiki.com" + path, dest)
+                .then(() => { console.log(`Downloaded "${filename}"`); })
+            );
+        }
     }
 
     return promises;
@@ -73,13 +74,7 @@ async function downloadWallpapers() {
     let wallpapers = downloadSet(html.matchAll(wallPatt));
     await Promise.all(wallpapers);
 
-    let numIcons = icons.length;
-    let numWallpapers = wallpapers.length;
-    if (numIcons !== numWallpapers) {
-        throw new Error(`Mismatch in wallpaper icons: got ${numIcons} icons for ${numWallpapers} wallpapers`);
-    }
-
-    console.log(`Downloaded ${numWallpapers} wallpapers`);
+    console.log(`Downloaded ${wallpapers.length} wallpapers`);
 }
 
 async function downloadFlooring() {
@@ -94,13 +89,7 @@ async function downloadFlooring() {
     let flooring = downloadSet(html.matchAll(floorPatt));
     await Promise.all(flooring);
 
-    let numIcons = icons.length;
-    let numFlooring = flooring.length;
-    if (numIcons !== numFlooring) {
-        throw new Error(`Mismatch in flooring icons: got ${numIcons} icons for ${numFlooring} flooring`);
-    }
-
-    console.log(`Downloaded ${numFlooring} flooring`);
+    console.log(`Downloaded ${flooring.length} flooring`);
 }
 
 async function main() {
