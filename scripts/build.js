@@ -3,7 +3,7 @@
 const fs = require("fs");
 const { spawnSync } = require('child_process');
 
-const isWin = require('os').platform().indexOf('win') != -1;
+const isWin = require('os').platform() === "win32";
 
 const buildDir = "public/";
 const assetsDir = "assets/";
