@@ -36,22 +36,26 @@ h1, h2 {
     flex: 1;
 }
 
-.is-loading .loading-container {
+.selected img {
+    border: 2px solid #2790ce;
+    outline: 2px solid #2790ce;
+}
+
+.is-loading #loading-container {
     display: block;
 }
 
-.is-loading .preview-region,
-.is-loading .selection-region {
+.is-loading #preview-region,
+.is-loading #selection-region {
     display: none;
 }
 
-.loading-container {
+#loading-container {
     display: none;
-    width: 100%;
     text-align: center;
 }
 
-.container {
+#container {
     flex: 1;
     min-height: 100vh;
     max-width: 1440px;
@@ -60,24 +64,24 @@ h1, h2 {
 }
 
 @media (min-width: 720px) { 
-    .container {
+    #container {
         display: flex;
     }
 }
 
-.preview-region {
+#preview-region {
     min-width: 420px;
     margin: 0 16px;
 }
 
 @media (min-width: 720px) { 
-    .preview-area {
+    #preview-area {
         position: fixed;
         width: 420px;
     }    
 }
 
-.preview-area {
+#preview-area {
     padding: 12px;
     border-radius: 16px;
     background-color: black;
@@ -85,18 +89,18 @@ h1, h2 {
     text-align: center;
 }
 
-.preview-area h1 {
+#preview-area h1 {
     margin: 8px 0;
     font-size: 36px;
 }
 
-.selection-region {
+#selection-region {
     display: flex;
     flex-direction: column;
     margin: 0 16px;
 }
 
-.selection-region h2 {
+#selection-region h2 {
     color: black;
     margin-top: 16px;
     margin-bottom: 4px;

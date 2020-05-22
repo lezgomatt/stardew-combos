@@ -5,19 +5,39 @@ const assetsPath = "assets/stardew/"
 const shedWidth = 390;
 const shedHeight = 437;
 
-let selectedWallpaper = "001";
-let selectedFlooring = "01";
+let selectedWallpaper = undefined;
+let selectedFlooring = undefined;
 
 let images = Object.create(null);
 
-let previewRegion = document.getElementsByClassName("preview-region")[0];
-let previewArea = document.getElementsByClassName("preview-area")[0];
-let canvas = null;
-let selectionRegion = document.getElementsByClassName("selection-region")[0];
-let wallpaperArea = document.getElementsByClassName("wallpaper-area")[0];
-let wallpaperContents = document.getElementsByClassName("wallpaper-contents")[0];
-let flooringArea = document.getElementsByClassName("flooring-area")[0];
-let flooringContents = document.getElementsByClassName("flooring-contents")[0];
+let previewRegion = document.getElementById("preview-region");
+let previewArea = document.getElementById("preview-area");
+let previewCanvas = document.getElementById("preview-canvas");
+let selectionRegion = document.getElementById("selection-region");
+let wallpaperArea = document.getElementById("wallpaper-area");
+let wallpaperContents = document.getElementById("wallpaper-contents");
+let flooringArea = document.getElementById("flooring-area");
+let flooringContents = document.getElementById("flooring-contents");
+
+function select(wallpaperId, flooringId) {
+    if (wallpaperId !== null && wallpaperId !== selectedWallpaper) {
+        if (selectedWallpaper !== undefined) {
+            document.getElementById("wallpaper:" + selectedWallpaper).classList.remove("selected");
+        }
+
+        selectedWallpaper = wallpaperId;
+        document.getElementById("wallpaper:" + selectedWallpaper).classList.add("selected");
+    }
+
+    if (flooringId !== null && flooringId !== selectedFlooring) {
+        if (selectedFlooring !== undefined) {
+            document.getElementById("flooring:" + selectedFlooring).classList.remove("selected");
+        }
+
+        selectedFlooring = flooringId;
+        document.getElementById("flooring:" + selectedFlooring).classList.add("selected");
+    }
+}
 
 function imageLoadPromise(imageElement) {
     return new Promise((resolve, reject) => {
@@ -31,10 +51,9 @@ function setup() {
 
     // == Preview Region == //
 
-    canvas = document.createElement("canvas");
-    canvas.width = shedWidth;
-    canvas.height = shedHeight;
-    previewArea.appendChild(canvas);
+    previewCanvas.width = shedWidth;
+    previewCanvas.height = shedHeight;
+    previewArea.appendChild(previewCanvas);
 
     let shedBackground = document.createElement("img");
     shedBackground.src = assetsPath + "Shed_Inside.png";
@@ -56,7 +75,8 @@ function setup() {
 
     // == Load Handler == //
     Promise.all(loadingImages).then(() => {
-        drawShed(selectedWallpaper, selectedFlooring);
+        select("001", "01");
+        drawShed();
         document.body.classList.remove("is-loading");
         centerPreview();
     });
@@ -71,10 +91,11 @@ function setupWallpaperChoices(container) {
         id = "0".repeat(3 - id.length) + id;
 
         let choice = document.createElement("span");
+        choice.id = "wallpaper:" + id;
         choice.classList.add("wallpaper-choice");
-        choice.addEventListener("click", (e) => { selectedWallpaper = id; drawShed(selectedWallpaper, selectedFlooring); });
-        choice.addEventListener("mouseenter", (e) => { drawShed(id, selectedFlooring); });
-        choice.addEventListener("mouseleave", (e) => { drawShed(selectedWallpaper, selectedFlooring); });
+        choice.addEventListener("click", () => { select(id, null); drawShed(); });
+        choice.addEventListener("mouseenter", () => { drawShed(id, undefined); });
+        choice.addEventListener("mouseleave", () => { drawShed(); });
         container.appendChild(choice);
     
         let icon = document.createElement("img");
@@ -104,10 +125,11 @@ function setupFlooringChoices(container) {
         id = "0".repeat(2 - id.length) + id;
 
         let choice = document.createElement("span");
+        choice.id = "flooring:" + id;
         choice.classList.add("flooring-choice");
-        choice.addEventListener("click", () => { selectedFlooring = id; drawShed(selectedWallpaper, selectedFlooring); });
-        choice.addEventListener("mouseenter", () => { drawShed(selectedWallpaper, id); });
-        choice.addEventListener("mouseleave", () => { drawShed(selectedWallpaper, selectedFlooring); });
+        choice.addEventListener("click", () => { select(null, id); drawShed(); });
+        choice.addEventListener("mouseenter", () => { drawShed(undefined, id); });
+        choice.addEventListener("mouseleave", () => { drawShed(); });
         container.appendChild(choice);
     
         let icon = document.createElement("img");
@@ -128,8 +150,8 @@ function setupFlooringChoices(container) {
     return loadingImages;
 }
 
-function drawShed(wallpaperId, flooringId) {
-    let context = canvas.getContext("2d");
+function drawShed(wallpaperId = selectedWallpaper, flooringId = selectedFlooring) {
+    let context = previewCanvas.getContext("2d");
 
     context.drawImage(images["background/shed"], 0, 0, shedWidth, shedHeight);
 
