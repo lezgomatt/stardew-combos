@@ -28,17 +28,21 @@ h1, h2 {
     line-height: 1.2;
 }
 
+button {
+  -webkit-appearance: button;
+}
+
+button::-moz-focus-inner {
+    border-style: none;
+    padding: 0;
+}
+
 .same-line {
     display: inline-block;
 }
 
 .spacer {
     flex: 1;
-}
-
-.selected img {
-    border: 2px solid #2790ce;
-    outline: 2px solid #2790ce;
 }
 
 .is-loading #loading-container {
@@ -108,16 +112,32 @@ h1, h2 {
     font-size: 24px;
 }
 
+.wallpaper-choice,
+.flooring-choice {
+    background: none;
+    border: none;
+    padding: 0;
+    margin: 2px 4px;
+    line-height: 0;
+    cursor: pointer;
+}
+
+.wallpaper-choice:focus,
+.flooring-choice:focus {
+    outline: 4px solid gray;
+}
+
+.wallpaper-choice.selected,
+.flooring-choice.selected {
+    outline: 4px solid #2890db;
+}
+
 .wallpaper-icon {
     width: 36px;
-    margin: 1px;
-    cursor: pointer;
 }
 
 .flooring-icon {
     width: 42px;
-    margin: 1px;
-    cursor: pointer;
 }
 
 footer {

@@ -90,7 +90,7 @@ function setupWallpaperChoices(container) {
         let id = i.toString();
         id = "0".repeat(3 - id.length) + id;
 
-        let choice = document.createElement("span");
+        let choice = document.createElement("button");
         choice.id = "wallpaper:" + id;
         choice.classList.add("wallpaper-choice");
         choice.addEventListener("click", () => { select(id, null); drawShed(); });
@@ -124,7 +124,7 @@ function setupFlooringChoices(container) {
         let id = i.toString();
         id = "0".repeat(2 - id.length) + id;
 
-        let choice = document.createElement("span");
+        let choice = document.createElement("button");
         choice.id = "flooring:" + id;
         choice.classList.add("flooring-choice");
         choice.addEventListener("click", () => { select(null, id); drawShed(); });
