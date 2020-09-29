@@ -1,9 +1,9 @@
 {
   "name": "stardew-combos",
   "version": "1.0.0",
-  "author": "undecidabot",
+  "author": "lezgomatt",
   "license": "Zlib",
-  "repository": "github:undecidabot/stardew-combos",
+  "repository": "github:lezgomatt/stardew-combos",
   "private": true,
   "scripts": {
     "fetch": "node scripts/fetch.js",
